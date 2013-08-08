@@ -510,11 +510,21 @@ void WorldSession::HandleBattlefieldLeaveOpcode(WorldPacket& recvData)
     recvData.read_skip<uint32>();                          // BattlegroundTypeId
     recvData.read_skip<uint16>();                          // unk3
 
-    // not allow leave battleground in combat
+    // not allow leave battleground in combat and in arena
     if (_player->IsInCombat())
+    {
         if (Battleground* bg = _player->GetBattleground())
             if (bg->GetStatus() != STATUS_WAIT_LEAVE)
                 return;
+    }
+    else
+    {
+        if (Battleground* bg = _player->GetBattleground())
+            if (bg->isArena() && bg->isRated())
+                if(bg->GetStartTime() <= 5*MINUTE*IN_MILLISECONDS)
+                    if (bg->GetStatus() != STATUS_WAIT_LEAVE)
+                        return;
+    }
 
     _player->LeaveBattleground();
 }
