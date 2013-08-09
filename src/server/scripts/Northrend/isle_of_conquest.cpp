@@ -104,7 +104,7 @@ public:
           // Seteamos el nivel correspondiente al boss
           if (level != 0)
               level += m_MaxLevel - 60;
-                    creature->SetLevel(level);					
+                    c->SetLevel(level);					
       }
 
       uint8 m_MaxLevel;

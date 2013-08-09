@@ -461,13 +461,13 @@ void World::LoadConfigSettings(bool reload)
     rate_values[RATE_DROP_ITEM_REFERENCED] = sConfigMgr->GetFloatDefault("Rate.Drop.Item.Referenced", 1.0f);
     rate_values[RATE_DROP_ITEM_REFERENCED_AMOUNT] = sConfigMgr->GetFloatDefault("Rate.Drop.Item.ReferencedAmount", 1.0f);
     rate_values[RATE_DROP_MONEY]  = sConfigMgr->GetFloatDefault("Rate.Drop.Money", 1.0f);
-    rate_values[RATE_XP_KILL]     = sConfigMgr->GetFloatDefault("Rate.XP.Kill", 1.0f);	rate_values[RATE_XP_KILL_PREMIUM]    = ConfigMgr::GetFloatDefault("Rate.XP.Kill.Premium", 1.0f);
-	rate_values[RATE_XP_KILL_PREMIUM]    = ConfigMgr::GetFloatDefault("Rate.XP.Kill.Premium", 1.0f);    rate_values[RATE_XP_EXPLORE]  = sConfigMgr->GetFloatDefault("Rate.XP.Explore", 1.0f);
-    rate_values[RATE_XP_QUEST]    = ConfigMgr::GetFloatDefault("Rate.XP.Quest", 1.0f);
-    rate_values[RATE_XP_QUEST_PREMIUM]   = ConfigMgr::GetFloatDefault("Rate.XP.Quest.Premium", 1.0f);
-    rate_values[RATE_XP_EXPLORE]  = ConfigMgr::GetFloatDefault("Rate.XP.Explore", 1.0f);
-    rate_values[RATE_XP_EXPLORE_PREMIUM] = ConfigMgr::GetFloatDefault("Rate.XP.Explore.Premium", 1.0f);
-    rate_values[RATE_REPAIRCOST]  = ConfigMgr::GetFloatDefault("Rate.RepairCost", 1.0f);
+    rate_values[RATE_XP_KILL]     = sConfigMgr->GetFloatDefault("Rate.XP.Kill", 1.0f);
+	rate_values[RATE_XP_KILL_PREMIUM]    = sConfigMgr->GetFloatDefault("Rate.XP.Kill.Premium", 1.0f);
+    rate_values[RATE_XP_QUEST]    = sConfigMgr->GetFloatDefault("Rate.XP.Quest", 1.0f);
+    rate_values[RATE_XP_QUEST_PREMIUM]   = sConfigMgr->GetFloatDefault("Rate.XP.Quest.Premium", 1.0f);
+    rate_values[RATE_XP_EXPLORE]  = sConfigMgr->GetFloatDefault("Rate.XP.Explore", 1.0f);
+    rate_values[RATE_XP_EXPLORE_PREMIUM] = sConfigMgr->GetFloatDefault("Rate.XP.Explore.Premium", 1.0f);
+    rate_values[RATE_REPAIRCOST]  = sConfigMgr->GetFloatDefault("Rate.RepairCost", 1.0f);
     if (rate_values[RATE_REPAIRCOST] < 0.0f)
     {
         TC_LOG_ERROR(LOG_FILTER_SERVER_LOADING, "Rate.RepairCost (%f) must be >=0. Using 0.0 instead.", rate_values[RATE_REPAIRCOST]);
@@ -475,7 +475,7 @@ void World::LoadConfigSettings(bool reload)
    }
 
     rate_values[RATE_REPUTATION_GAIN]  = sConfigMgr->GetFloatDefault("Rate.Reputation.Gain", 1.0f);
-    rate_values[RATE_REPUTATION_GAIN_PREMIUM]  = sConfigMgr::GetFloatDefault("Rate.Reputation.Gain.Premium", 1.0f);
+    rate_values[RATE_REPUTATION_GAIN_PREMIUM]  = sConfigMgr->GetFloatDefault("Rate.Reputation.Gain.Premium", 1.0f);
     rate_values[RATE_REPUTATION_LOWLEVEL_KILL]  = sConfigMgr->GetFloatDefault("Rate.Reputation.LowLevel.Kill", 1.0f);
     rate_values[RATE_REPUTATION_LOWLEVEL_QUEST]  = sConfigMgr->GetFloatDefault("Rate.Reputation.LowLevel.Quest", 1.0f);
     rate_values[RATE_REPUTATION_RECRUIT_A_FRIEND_BONUS] = sConfigMgr->GetFloatDefault("Rate.Reputation.RecruitAFriendBonus", 0.1f);
@@ -497,14 +497,14 @@ void World::LoadConfigSettings(bool reload)
     rate_values[RATE_CREATURE_AGGRO]  = sConfigMgr->GetFloatDefault("Rate.Creature.Aggro", 1.0f);
     rate_values[RATE_REST_INGAME]                    = sConfigMgr->GetFloatDefault("Rate.Rest.InGame", 1.0f);
     rate_values[RATE_REST_OFFLINE_IN_TAVERN_OR_CITY] = sConfigMgr->GetFloatDefault("Rate.Rest.Offline.InTavernOrCity", 1.0f);
-    rate_values[RATE_HONOR_PREMIUM] = sConfigMgr::GetFloatDefault("Rate.Honor.Premium", 1.0f);
+    rate_values[RATE_HONOR_PREMIUM] = sConfigMgr->GetFloatDefault("Rate.Honor.Premium", 1.0f);
     rate_values[RATE_REST_OFFLINE_IN_WILDERNESS]     = sConfigMgr->GetFloatDefault("Rate.Rest.Offline.InWilderness", 1.0f);
     rate_values[RATE_DAMAGE_FALL]  = sConfigMgr->GetFloatDefault("Rate.Damage.Fall", 1.0f);
     rate_values[RATE_AUCTION_TIME]  = sConfigMgr->GetFloatDefault("Rate.Auction.Time", 1.0f);
     rate_values[RATE_AUCTION_DEPOSIT] = sConfigMgr->GetFloatDefault("Rate.Auction.Deposit", 1.0f);
     rate_values[RATE_AUCTION_CUT] = sConfigMgr->GetFloatDefault("Rate.Auction.Cut", 1.0f);
     rate_values[RATE_HONOR] = sConfigMgr->GetFloatDefault("Rate.Honor", 1.0f);
-    rate_values[RATE_HONOR_PREMIUM] = sConfigMgr::GetFloatDefault("Rate.Honor.Premium", 1.0f);
+    rate_values[RATE_HONOR_PREMIUM] = sConfigMgr->GetFloatDefault("Rate.Honor.Premium", 1.0f);
     rate_values[RATE_INSTANCE_RESET_TIME] = sConfigMgr->GetFloatDefault("Rate.InstanceResetTime", 1.0f);
     rate_values[RATE_TALENT] = sConfigMgr->GetFloatDefault("Rate.Talent", 1.0f);
     if (rate_values[RATE_TALENT] < 0.0f)
@@ -1224,19 +1224,20 @@ void World::LoadConfigSettings(bool reload)
     m_bool_configs[CONFIG_UI_QUESTLEVELS_IN_DIALOGS] = sConfigMgr->GetBoolDefault("UI.ShowQuestLevelsInDialogs", false);
     
     // Vip Commands	
-    m_bool_configs[CONFIG_VIP_DEBUFF_COMMAND] = sConfigMgr::GetBoolDefault("Vip.Debuff.Command", true);	m_bool_configs[CONFIG_VIP_BANK_COMMAND] = sConfigMgr::GetBoolDefault("Vip.Bank.Command", true);
-    m_bool_configs[CONFIG_VIP_REPAIR_COMMAND] = sConfigMgr::GetBoolDefault("Vip.Repair.Command", true);
-    m_bool_configs[CONFIG_VIP_RESET_TALENTS_COMMAND] = sConfigMgr::GetBoolDefault("Vip.Reset.Talents.Command", true);
-    m_bool_configs[CONFIG_VIP_TAXI_COMMAND] = sConfigMgr::GetBoolDefault("Vip.Taxi.Command", true);
-    m_bool_configs[CONFIG_VIP_HOME_COMMAND] = sConfigMgr::GetBoolDefault("Vip.Home.Command", true);
-    m_bool_configs[CONFIG_VIP_CAPITAL_COMMAND] = sConfigMgr::GetBoolDefault("Vip.Capital.Command", true);
+    m_bool_configs[CONFIG_VIP_DEBUFF_COMMAND] = sConfigMgr->GetBoolDefault("Vip.Debuff.Command", true);
+	m_bool_configs[CONFIG_VIP_BANK_COMMAND] = sConfigMgr->GetBoolDefault("Vip.Bank.Command", true);
+    m_bool_configs[CONFIG_VIP_REPAIR_COMMAND] = sConfigMgr->GetBoolDefault("Vip.Repair.Command", true);
+    m_bool_configs[CONFIG_VIP_RESET_TALENTS_COMMAND] = sConfigMgr->GetBoolDefault("Vip.Reset.Talents.Command", true);
+    m_bool_configs[CONFIG_VIP_TAXI_COMMAND] = sConfigMgr->GetBoolDefault("Vip.Taxi.Command", true);
+    m_bool_configs[CONFIG_VIP_HOME_COMMAND] = sConfigMgr->GetBoolDefault("Vip.Home.Command", true);
+    m_bool_configs[CONFIG_VIP_CAPITAL_COMMAND] = sConfigMgr->GetBoolDefault("Vip.Capital.Command", true);
     
-    //movement anticheat pasivo	
-	m_bool_configs[CONFIG_ANTICHEAT_ENABLE] = sConfigMgr::GetBoolDefault("Anticheat.Enable", true);
-	m_int_configs[CONFIG_ANTICHEAT_REPORTS_INGAME_NOTIFICATION] = sConfigMgr::GetIntDefault("Anticheat.ReportsForIngameWarnings", 70);
-	m_int_configs[CONFIG_ANTICHEAT_DETECTIONS_ENABLED] = sConfigMgr::GetIntDefault("Anticheat.DetectionsEnabled",31);
-	m_int_configs[CONFIG_ANTICHEAT_MAX_REPORTS_FOR_DAILY_REPORT] = sConfigMgr::GetIntDefault("Anticheat.MaxReportsForDailyReport",70);
-    m_bool_configs[CONFIG_BAN_PLAYER] = sConfigMgr::GetBoolDefault("Anticheat.Ban", true);
+    // anticheat pasivo	
+	m_bool_configs[CONFIG_ANTICHEAT_ENABLE] = sConfigMgr->GetBoolDefault("Anticheat.Enable", true);
+	m_int_configs[CONFIG_ANTICHEAT_REPORTS_INGAME_NOTIFICATION] = sConfigMgr->GetIntDefault("Anticheat.ReportsForIngameWarnings", 70);
+	m_int_configs[CONFIG_ANTICHEAT_DETECTIONS_ENABLED] = sConfigMgr->GetIntDefault("Anticheat.DetectionsEnabled",31);
+	m_int_configs[CONFIG_ANTICHEAT_MAX_REPORTS_FOR_DAILY_REPORT] = sConfigMgr->GetIntDefault("Anticheat.MaxReportsForDailyReport",70);
+    m_bool_configs[CONFIG_BAN_PLAYER] = sConfigMgr->GetBoolDefault("Anticheat.Ban", true);
 	
     // Wintergrasp battlefield
     m_bool_configs[CONFIG_WINTERGRASP_ENABLE] = sConfigMgr->GetBoolDefault("Wintergrasp.Enable", false);
@@ -1255,11 +1256,11 @@ void World::LoadConfigSettings(bool reload)
     m_float_configs[CONFIG_STATS_LIMITS_CRIT] = sConfigMgr->GetFloatDefault("Stats.Limits.Crit", 95.0f);
      
      //Reset Duel Cooldown
-     m_bool_configs[CONFIG_DUEL_RESET_COOLDOWN_ON_START] = sConfigMgr::GetBoolDefault("DuelReset.Cooldown.OnStart", false);
-     m_bool_configs[CONFIG_DUEL_RESET_COOLDOWN_ON_FINISH] = sConfigMgr::GetBoolDefault("DuelReset.Cooldown.OnFinish", false);
-     m_bool_configs[CONFIG_DUEL_RESET_COOLDOWN_ONLY_IN_ELWYNN_AND_DUROTAR] = sConfigMgr::GetBoolDefault("DuelReset.Cooldown.Only.in.Elwynn.and.Durotar", false);
-     m_bool_configs[CONFIG_DUEL_RESET_COOLDOWN_MAX_ENERGY_ON_START] = sConfigMgr::GetBoolDefault("DuelReset.Cooldown.Max.Energy.OnStart", false);
-     m_bool_configs[CONFIG_DUEL_RESET_COOLDOWN_RESET_ENERGY_ON_START] = sConfigMgr::GetBoolDefault("DuelReset.Cooldown.Reset.Energy.OnStart", false);
+     m_bool_configs[CONFIG_DUEL_RESET_COOLDOWN_ON_START] = sConfigMgr->GetBoolDefault("DuelReset.Cooldown.OnStart", false);
+     m_bool_configs[CONFIG_DUEL_RESET_COOLDOWN_ON_FINISH] = sConfigMgr->GetBoolDefault("DuelReset.Cooldown.OnFinish", false);
+     m_bool_configs[CONFIG_DUEL_RESET_COOLDOWN_ONLY_IN_ELWYNN_AND_DUROTAR] = sConfigMgr->GetBoolDefault("DuelReset.Cooldown.Only.in.Elwynn.and.Durotar", false);
+     m_bool_configs[CONFIG_DUEL_RESET_COOLDOWN_MAX_ENERGY_ON_START] = sConfigMgr->GetBoolDefault("DuelReset.Cooldown.Max.Energy.OnStart", false);
+     m_bool_configs[CONFIG_DUEL_RESET_COOLDOWN_RESET_ENERGY_ON_START] = sConfigMgr->GetBoolDefault("DuelReset.Cooldown.Reset.Energy.OnStart", false);
 
     // call ScriptMgr if we're reloading the configuration
     if (reload)
