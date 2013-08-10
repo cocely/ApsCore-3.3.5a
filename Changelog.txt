@@ -1,0 +1,29 @@
+Change Log For ApsCore 3.3.5a 2013
+
+
+[4] --> DB/Quest: Fix: Quests in Wintergrasp (Thx Torrad).
+[3] --> Fix Compile Error And Style Code
+[2] --> Add Tools CleanUp
+[1] --> Add Custom Scripts
+
+#########################################################################
+#                                                                       #
+# Thanks to:                                                            #
+#                                                                       #
+#            https://github.com/garyfisher                              #
+#            https://github.com/Torrad                                  #
+#            https://github.com/Pitcrawler                              #
+#            https://github.com/malcrom                                 #
+#            https://github.com/Kirkhammett                             #
+#            https://github.com/dr-j                                    #
+#            https://github.com/diton                                   #
+#            https://github.com/gc                                      #
+#            https://github.com/tibbi                                   #
+#            https://github.com/locksmith                               #
+#            https://github.com/Thainification                          #
+#            https://github.com/fiveofeight                             #
+#            https://github.com/ApocalypsTeam                           #
+#                                                                       #
+#########################################################################
+
+
