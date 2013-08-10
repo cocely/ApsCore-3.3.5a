@@ -1,6 +1,7 @@
 Change Log For ApsCore 3.3.5a 2013
 
 
+[6] --> DB/Quest: Fix: In Search Of Answers
 [5] --> DB/Quest: Fix: A Suitable Disguise.
 [4] --> DB/Quest: Fix: Quests in Wintergrasp (Thx Torrad).
 [3] --> Fix Compile Error And Style Code
