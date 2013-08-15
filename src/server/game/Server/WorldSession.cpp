@@ -102,7 +102,7 @@ WorldSession::WorldSession(uint32 id, WorldSocket* sock, AccountTypes sec, bool 
     _player(NULL),
     m_Socket(sock),
     _security(sec),
-    _ispremium(ispremium),
+    _ispremium(ispremium),	
     _accountId(id),
     m_expansion(expansion),
     _warden(NULL),
@@ -119,6 +119,7 @@ WorldSession::WorldSession(uint32 id, WorldSocket* sock, AccountTypes sec, bool 
     recruiterId(recruiter),
     isRecruiter(isARecruiter),
     timeLastWhoCommand(0),
+    m_CurrentVendor(0),	
     _RBACData(NULL)
 {
     if (sock)

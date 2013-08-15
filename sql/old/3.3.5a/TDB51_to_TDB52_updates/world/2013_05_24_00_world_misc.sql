@@ -78,7 +78,6 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 (30824,0,0,'FIRE! FIRE!',14,0,100,0,0,0,'Korm SAY_KORM_FIRE'),
 (30824,1,0,'Quickly, climb aboard! We mustn''t tarry here. There''s no telling when this whole mountainside will collapse!',14,0,100,0,0,0,'Korm SAY_KORM_FINAL_1');
 
-/*
 # 3+4+4+5 +4+4+5+5 = 16+18
 # if 1st boss is dead and we wipe counter starts at wave 6
 SET @CGUID  := 400000;
@@ -122,9 +121,9 @@ INSERT INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `position
 (@CGUID+22, 38177, 668, 3, 1, 5299.434, 1979.009, 707.7781, 1.239184, 7200, 0, 0),
 (@CGUID+26, 38172, 668, 3, 1, 5320.369, 1980.125, 707.7781, 2.007129, 7200, 0, 0),
 (@CGUID+27, 38172, 668, 3, 1, 5306.572, 1977.474, 707.7781, 1.500983, 7200, 0, 0);
-*/
 
-/*
+
+
 -- Uther the Lightbringer missing emotes
 UPDATE `creature_text` SET `emote`=5 WHERE `entry`=37225 AND `groupid` IN (0,4,8,15) AND `id`=0;
 UPDATE `creature_text` SET `emote`=1 WHERE `entry`=37225 AND `groupid` IN (1,2,3,5,6,7,9,10,11,12,13,14) AND `id`=0;
@@ -294,5 +293,5 @@ INSERT INTO `script_waypoint` VALUES
 (36954,65,5287.11,1713.96,781.667,0,'HoR WP LichKing'),
 (36954,66,5280.14,1705.21,784.65,0,'HoR WP LichKing'),
 (36954,67,5277.98,1701.28,785.224,0,'HoR WP LichKing');
-*/
+
 -- Halls of Reflexion WIP

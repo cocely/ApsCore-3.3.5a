@@ -10,6 +10,16 @@
 
 set(scripts_STAT_SRCS
   ${scripts_STAT_SRCS}
+  Custom/duel_reset.cpp
+  Custom/announcer_boss.cpp 
+  Custom/npc_vip_vendor.cpp
+  Custom/show_top_10_arena_teams.cpp
+  Custom/Transmogrification.h
+
+  Custom/Transmogrification.cpp
+
+  Custom/Transmogrifier.cpp
+
 )
 
 message("  -> Prepared: Custom")
