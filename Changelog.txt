@@ -1,6 +1,7 @@
 Change Log For ApsCore 3.3.5a 2013
 
 
+[8] --> DB/Quest: Fix: Rallying the Troops.
 [7] --> DB/Quest: Fix: The Heart of the Storm | by Pitcrawler
 [6] --> DB/Quest: Fix: In Search Of Answers
 [5] --> DB/Quest: Fix: A Suitable Disguise.
