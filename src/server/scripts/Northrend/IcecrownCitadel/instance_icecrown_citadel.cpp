@@ -176,14 +176,14 @@ class instance_icecrown_citadel : public InstanceMapScript
                 data << uint32(WORLDSTATE_ATTEMPTS_MAX)       << uint32(MaxHeroicAttempts);
             }
 
-            void OnPlayerEnter(Player* player)
+            void OnPlayerEnter(Player* player) OVERRIDE
             {
                 if (!TeamInInstance)
                     TeamInInstance = player->GetTeam();
                     PrepareGunshipEvent(player); // Spawn Gunship Event
             }
 
-            void OnCreatureCreate(Creature* creature)
+            void OnCreatureCreate(Creature* creature) OVERRIDE
             {
                 if (!TeamInInstance)
                 {
