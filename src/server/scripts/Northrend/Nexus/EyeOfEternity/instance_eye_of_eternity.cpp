@@ -48,7 +48,7 @@ public:
             alexstraszaBunnyGUID = 0;
         };
 
-        bool SetBossState(uint32 type, EncounterState state) OVERRIDE
+        bool SetBossState(uint32 type, EncounterState state)
         {
             if (!InstanceScript::SetBossState(type, state))
                 return false;
@@ -94,7 +94,7 @@ public:
             instance->AddToMap(go);
         }
 
-        void OnGameObjectCreate(GameObject* go) OVERRIDE
+        void OnGameObjectCreate(GameObject* go)
         {
             switch (go->GetEntry())
             {
@@ -130,7 +130,7 @@ public:
             }
         }
 
-        void OnCreatureCreate(Creature* creature) OVERRIDE
+        void OnCreatureCreate(Creature* creature)
         {
             switch (creature->GetEntry())
             {
@@ -152,7 +152,7 @@ public:
             }
         }
 
-        void OnUnitDeath(Unit* unit) OVERRIDE
+        void OnUnitDeath(Unit* unit)
         {
             if (unit->GetTypeId() != TYPEID_PLAYER)
                 return;
@@ -278,7 +278,7 @@ public:
             return 0;
         }
 
-        std::string GetSaveData() OVERRIDE
+        std::string GetSaveData()
         {
             OUT_SAVE_INST_DATA;
 
@@ -289,7 +289,7 @@ public:
             return saveStream.str();
         }
 
-        void Load(const char* str) OVERRIDE
+        void Load(const char* str)
         {
             if (!str)
             {

@@ -72,7 +72,7 @@ class instance_stratholme : public InstanceMapScript
             std::set<uint64> abomnationGUID;
             EventMap events;
 
-            void Initialize() OVERRIDE
+            void Initialize()
             {
                 for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
                     EncounterState[i] = NOT_STARTED;
@@ -126,7 +126,7 @@ class instance_stratholme : public InstanceMapScript
                 }
             }
 
-            void OnCreatureCreate(Creature* creature) OVERRIDE
+            void OnCreatureCreate(Creature* creature)
             {
                 switch (creature->GetEntry())
                 {
@@ -146,7 +146,7 @@ class instance_stratholme : public InstanceMapScript
                 }
             }
 
-            void OnCreatureRemove(Creature* creature) OVERRIDE
+            void OnCreatureRemove(Creature* creature)
             {
                 switch (creature->GetEntry())
                 {
@@ -160,7 +160,7 @@ class instance_stratholme : public InstanceMapScript
                 }
             }
 
-            void OnGameObjectCreate(GameObject* go) OVERRIDE
+            void OnGameObjectCreate(GameObject* go)
             {
                 switch (go->GetEntry())
                 {
@@ -353,7 +353,7 @@ class instance_stratholme : public InstanceMapScript
                     SaveToDB();
             }
 
-            std::string GetSaveData() OVERRIDE
+            std::string GetSaveData()
             {
                 OUT_SAVE_INST_DATA;
 
@@ -365,7 +365,7 @@ class instance_stratholme : public InstanceMapScript
                 return saveStream.str();
             }
 
-            void Load(const char* in) OVERRIDE
+            void Load(const char* in)
             {
                 if (!in)
                 {
@@ -426,7 +426,7 @@ class instance_stratholme : public InstanceMapScript
                 return 0;
             }
 
-            void Update(uint32 diff) OVERRIDE
+            void Update(uint32 diff)
             {
                 events.Update(diff);
 

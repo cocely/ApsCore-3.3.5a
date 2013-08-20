@@ -38,7 +38,7 @@ class instance_zulgurub : public InstanceMapScript
                 SetBossNumber(EncounterCount);
             }
 
-            void Initialize() OVERRIDE
+            void Initialize()
             {
                 _zealotLorkhanGUID = 0;
                 _zealotZathGUID = 0;
@@ -50,13 +50,13 @@ class instance_zulgurub : public InstanceMapScript
                 _goGongOfBethekkGUID = 0;
             }
 
-            bool IsEncounterInProgress() const OVERRIDE
+            bool IsEncounterInProgress() const
             {
                 // not active in Zul'Gurub
                 return false;
             }
 
-            void OnCreatureCreate(Creature* creature) OVERRIDE
+            void OnCreatureCreate(Creature* creature)
             {
                 switch (creature->GetEntry())
                 {
@@ -81,7 +81,7 @@ class instance_zulgurub : public InstanceMapScript
                 }
             }
 
-            void OnGameObjectCreate(GameObject* go) OVERRIDE
+            void OnGameObjectCreate(GameObject* go)
             {
                 switch (go->GetEntry())
                 {
@@ -129,7 +129,7 @@ class instance_zulgurub : public InstanceMapScript
                 return 0;
             }
 
-            std::string GetSaveData() OVERRIDE
+            std::string GetSaveData()
             {
                 OUT_SAVE_INST_DATA;
 
@@ -140,7 +140,7 @@ class instance_zulgurub : public InstanceMapScript
                 return saveStream.str();
             }
 
-            void Load(const char* str) OVERRIDE
+            void Load(const char* str)
             {
                 if (!str)
                 {

@@ -81,7 +81,7 @@ public:
         uint32 SpectralRealmTimer;
         std::vector<uint64> SpectralRealmList;
 
-        void Initialize() OVERRIDE
+        void Initialize()
         {
             memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 
@@ -113,7 +113,7 @@ public:
             SpectralRealmTimer = 5000;
         }
 
-        bool IsEncounterInProgress() const OVERRIDE
+        bool IsEncounterInProgress() const
         {
             for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
                 if (m_auiEncounter[i] == IN_PROGRESS)
@@ -141,7 +141,7 @@ public:
             return NULL;
         }
 
-        void OnCreatureCreate(Creature* creature) OVERRIDE
+        void OnCreatureCreate(Creature* creature)
         {
             switch (creature->GetEntry())
             {
@@ -161,7 +161,7 @@ public:
             }
         }
 
-        void OnGameObjectCreate(GameObject* go) OVERRIDE
+        void OnGameObjectCreate(GameObject* go)
         {
             switch (go->GetEntry())
             {
@@ -272,7 +272,7 @@ public:
                 SaveToDB();
         }
 
-        std::string GetSaveData() OVERRIDE
+        std::string GetSaveData()
         {
             OUT_SAVE_INST_DATA;
             std::ostringstream stream;
@@ -283,7 +283,7 @@ public:
             return stream.str();
         }
 
-        void Load(char const* in) OVERRIDE
+        void Load(char const* in)
         {
             if (!in)
             {

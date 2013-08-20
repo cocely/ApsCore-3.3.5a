@@ -60,7 +60,7 @@ public:
         uint64 MaulgarDoor;
         uint64 GruulDoor;
 
-        void Initialize() OVERRIDE
+        void Initialize()
         {
             memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 
@@ -75,7 +75,7 @@ public:
             GruulDoor = 0;
         }
 
-        bool IsEncounterInProgress() const OVERRIDE
+        bool IsEncounterInProgress() const
         {
             for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
                 if (m_auiEncounter[i] == IN_PROGRESS)
@@ -84,7 +84,7 @@ public:
             return false;
         }
 
-        void OnCreatureCreate(Creature* creature) OVERRIDE
+        void OnCreatureCreate(Creature* creature)
         {
             switch (creature->GetEntry())
             {
@@ -96,7 +96,7 @@ public:
             }
         }
 
-        void OnGameObjectCreate(GameObject* go) OVERRIDE
+        void OnGameObjectCreate(GameObject* go)
         {
             switch (go->GetEntry())
             {
@@ -166,7 +166,7 @@ public:
             return 0;
         }
 
-        std::string GetSaveData() OVERRIDE
+        std::string GetSaveData()
         {
             OUT_SAVE_INST_DATA;
             std::ostringstream stream;
@@ -176,7 +176,7 @@ public:
             return stream.str();
         }
 
-        void Load(const char* in) OVERRIDE
+        void Load(const char* in)
         {
             if (!in)
             {

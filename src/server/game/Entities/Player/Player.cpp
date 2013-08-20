@@ -27,6 +27,7 @@
 #include "BattlefieldMgr.h"
 #include "BattlefieldWG.h"
 #include "Battleground.h"
+#include "BattlegroundAV.h"
 #include "BattlegroundMgr.h"
 #include "CellImpl.h"
 #include "Channel.h"
@@ -8801,12 +8802,16 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
         if (go->getLootState() == GO_READY)
         {
             uint32 lootid = go->GetGOInfo()->GetLootId();
-            if (Battleground* bg = GetBattleground())
-                if (!bg->CanActivateGO(go->GetEntry(), GetTeam()))
-                {
-                    SendLootRelease(guid);
-                    return;
-                }
+
+            /// @todo fix this big hack
+            if ((go->GetEntry() == BG_AV_OBJECTID_MINE_N || go->GetEntry() == BG_AV_OBJECTID_MINE_S))
+                if (Battleground* bg = GetBattleground())
+                    if (bg->GetTypeID(true) == BATTLEGROUND_AV)
+                        if (!(((BattlegroundAV*)bg)->PlayerCanDoMineQuest(go->GetEntry(), GetTeam())))
+                        {
+                            SendLootRelease(guid);
+                            return;
+                        }
 
             if (lootid)
             {
@@ -15424,10 +15429,7 @@ bool Player::SatisfyQuestSkill(Quest const* qInfo, bool msg) const
     if (GetSkillValue(skill) < qInfo->GetRequiredSkillValue())
     {
         if (msg)
-        {
             SendCanTakeQuestResponse(INVALIDREASON_DONT_HAVE_REQ);
-            TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestSkill: Sent INVALIDREASON_DONT_HAVE_REQ (questId: %u) because player does not have required skill value.", qInfo->GetQuestId());
-        }
 
         return false;
     }
@@ -15440,19 +15442,13 @@ bool Player::SatisfyQuestLevel(Quest const* qInfo, bool msg)
     if (getLevel() < qInfo->GetMinLevel())
     {
         if (msg)
-        {
             SendCanTakeQuestResponse(INVALIDREASON_QUEST_FAILED_LOW_LEVEL);
-            TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestLevel: Sent INVALIDREASON_QUEST_FAILED_LOW_LEVEL (questId: %u) because player does not have required (min) level.", qInfo->GetQuestId());
-        }
         return false;
     }
     else if (qInfo->GetMaxLevel() > 0 && getLevel() > qInfo->GetMaxLevel())
     {
         if (msg)
-        {
             SendCanTakeQuestResponse(INVALIDREASON_DONT_HAVE_REQ); // There doesn't seem to be a specific response for too high player level
-            TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestLevel: Sent INVALIDREASON_QUEST_FAILED_LOW_LEVEL (questId: %u) because player does not have required (max) level.", qInfo->GetQuestId());
-        }
         return false;
     }
     return true;
@@ -15509,14 +15505,11 @@ bool Player::SatisfyQuestPreviousQuest(Quest const* qInfo, bool msg)
                     if (exclude_Id == prevId)
                         continue;
 
-                    // alternative quest from group also must be completed and rewarded (reported)
+                    // alternative quest from group also must be completed and rewarded(reported)
                     if (m_RewardedQuests.find(exclude_Id) == m_RewardedQuests.end())
                     {
                         if (msg)
-                        {
                             SendCanTakeQuestResponse(INVALIDREASON_DONT_HAVE_REQ);
-                            TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestPreviousQuest: Sent INVALIDREASON_DONT_HAVE_REQ (questId: %u) because player does not have required quest (1).", qInfo->GetQuestId());
-                        }
                         return false;
                     }
                 }
@@ -15549,11 +15542,7 @@ bool Player::SatisfyQuestPreviousQuest(Quest const* qInfo, bool msg)
                     if (GetQuestStatus(exclude_Id) != QUEST_STATUS_NONE)
                     {
                         if (msg)
-                        {
                             SendCanTakeQuestResponse(INVALIDREASON_DONT_HAVE_REQ);
-                            TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestPreviousQuest: Sent INVALIDREASON_DONT_HAVE_REQ (questId: %u) because player does not have required quest (2).", qInfo->GetQuestId());
-
-                        }
                         return false;
                     }
                 }
@@ -15565,10 +15554,7 @@ bool Player::SatisfyQuestPreviousQuest(Quest const* qInfo, bool msg)
     // Has only positive prev. quests in non-rewarded state
     // and negative prev. quests in non-active state
     if (msg)
-    {
         SendCanTakeQuestResponse(INVALIDREASON_DONT_HAVE_REQ);
-        TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestPreviousQuest: Sent INVALIDREASON_DONT_HAVE_REQ (questId: %u) because player does not have required quest (3).", qInfo->GetQuestId());
-    }
 
     return false;
 }
@@ -15583,10 +15569,7 @@ bool Player::SatisfyQuestClass(Quest const* qInfo, bool msg) const
     if ((reqClass & getClassMask()) == 0)
     {
         if (msg)
-        {
             SendCanTakeQuestResponse(INVALIDREASON_DONT_HAVE_REQ);
-            TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestClass: Sent INVALIDREASON_DONT_HAVE_REQ (questId: %u) because player does not have required class.", qInfo->GetQuestId());
-        }
 
         return false;
     }
@@ -15602,11 +15585,7 @@ bool Player::SatisfyQuestRace(Quest const* qInfo, bool msg)
     if ((reqraces & getRaceMask()) == 0)
     {
         if (msg)
-        {
             SendCanTakeQuestResponse(INVALIDREASON_QUEST_FAILED_WRONG_RACE);
-            TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestRace: Sent INVALIDREASON_QUEST_FAILED_WRONG_RACE (questId: %u) because player does not have required race.", qInfo->GetQuestId());
-
-        }
         return false;
     }
     return true;
@@ -15618,10 +15597,7 @@ bool Player::SatisfyQuestReputation(Quest const* qInfo, bool msg)
     if (fIdMin && GetReputationMgr().GetReputation(fIdMin) < qInfo->GetRequiredMinRepValue())
     {
         if (msg)
-        {
             SendCanTakeQuestResponse(INVALIDREASON_DONT_HAVE_REQ);
-            TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestReputation: Sent INVALIDREASON_DONT_HAVE_REQ (questId: %u) because player does not have required reputation (min).", qInfo->GetQuestId());
-        }
         return false;
     }
 
@@ -15629,10 +15605,7 @@ bool Player::SatisfyQuestReputation(Quest const* qInfo, bool msg)
     if (fIdMax && GetReputationMgr().GetReputation(fIdMax) >= qInfo->GetRequiredMaxRepValue())
     {
         if (msg)
-        {
             SendCanTakeQuestResponse(INVALIDREASON_DONT_HAVE_REQ);
-            TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestReputation: Sent INVALIDREASON_DONT_HAVE_REQ (questId: %u) because player does not have required reputation (max).", qInfo->GetQuestId());
-        }
         return false;
     }
 
@@ -15642,10 +15615,7 @@ bool Player::SatisfyQuestReputation(Quest const* qInfo, bool msg)
     if (fIdObj && GetReputationMgr().GetReputation(fIdObj) >= qInfo->GetRepObjectiveValue2())
     {
         if (msg)
-        {
             SendCanTakeQuestResponse(INVALIDREASON_DONT_HAVE_REQ);
-            TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestReputation: Sent INVALIDREASON_DONT_HAVE_REQ (questId: %u) because player does not have required reputation (ReputationObjective2).", qInfo->GetQuestId());
-        }
         return false;
     }
 
@@ -15657,10 +15627,7 @@ bool Player::SatisfyQuestStatus(Quest const* qInfo, bool msg)
     if (GetQuestStatus(qInfo->GetQuestId()) != QUEST_STATUS_NONE)
     {
         if (msg)
-        {
             SendCanTakeQuestResponse(INVALIDREASON_QUEST_ALREADY_ON);
-            TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestStatus: Sent INVALIDREASON_QUEST_ALREADY_ON (questId: %u) because player quest status is not NONE.", qInfo->GetQuestId());
-        }
         return false;
     }
     return true;
@@ -15672,10 +15639,7 @@ bool Player::SatisfyQuestConditions(Quest const* qInfo, bool msg)
     if (!sConditionMgr->IsObjectMeetToConditions(this, conditions))
     {
         if (msg)
-        {
             SendCanTakeQuestResponse(INVALIDREASON_DONT_HAVE_REQ);
-            TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestConditions: Sent INVALIDREASON_DONT_HAVE_REQ (questId: %u) because player does not meet conditions.", qInfo->GetQuestId());
-        }
         TC_LOG_DEBUG(LOG_FILTER_CONDITIONSYS, "Player::SatisfyQuestConditions: conditions not met for quest %u", qInfo->GetQuestId());
         return false;
     }
@@ -15687,10 +15651,7 @@ bool Player::SatisfyQuestTimed(Quest const* qInfo, bool msg)
     if (!m_timedquests.empty() && qInfo->HasFlag(QUEST_TRINITY_FLAGS_TIMED))
     {
         if (msg)
-        {
             SendCanTakeQuestResponse(INVALIDREASON_QUEST_ONLY_ONE_TIMED);
-            TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestTimed: Sent INVALIDREASON_QUEST_ONLY_ONE_TIMED (questId: %u) because player is already on a timed quest.", qInfo->GetQuestId());
-        }
         return false;
     }
     return true;
@@ -15720,10 +15681,7 @@ bool Player::SatisfyQuestExclusiveGroup(Quest const* qInfo, bool msg)
         if (!SatisfyQuestDay(Nquest, false) || !SatisfyQuestWeek(Nquest, false) || !SatisfyQuestSeasonal(Nquest, false))
         {
             if (msg)
-            {
                 SendCanTakeQuestResponse(INVALIDREASON_DONT_HAVE_REQ);
-                TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestExclusiveGroup: Sent INVALIDREASON_DONT_HAVE_REQ (questId: %u) because player already did daily quests in exclusive group.", qInfo->GetQuestId());
-            }
 
             return false;
         }
@@ -15732,10 +15690,7 @@ bool Player::SatisfyQuestExclusiveGroup(Quest const* qInfo, bool msg)
         if (GetQuestStatus(exclude_Id) != QUEST_STATUS_NONE || (!(qInfo->IsRepeatable() && Nquest->IsRepeatable()) && (m_RewardedQuests.find(exclude_Id) != m_RewardedQuests.end())))
         {
             if (msg)
-            {
                 SendCanTakeQuestResponse(INVALIDREASON_DONT_HAVE_REQ);
-                TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestExclusiveGroup: Sent INVALIDREASON_DONT_HAVE_REQ (questId: %u) because player already did quest in exclusive group.", qInfo->GetQuestId());
-            }
             return false;
         }
     }
@@ -15752,10 +15707,7 @@ bool Player::SatisfyQuestNextChain(Quest const* qInfo, bool msg)
     if (GetQuestStatus(nextQuest) != QUEST_STATUS_NONE) // GetQuestStatus returns QUEST_STATUS_COMPLETED for rewarded quests
     {
         if (msg)
-        {
             SendCanTakeQuestResponse(INVALIDREASON_DONT_HAVE_REQ);
-            TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestNextChain: Sent INVALIDREASON_DONT_HAVE_REQ (questId: %u) because player already did or started next quest in chain.", qInfo->GetQuestId());
-        }
         return false;
     }
 
@@ -15779,10 +15731,7 @@ bool Player::SatisfyQuestPrevChain(Quest const* qInfo, bool msg)
         if (itr != m_QuestStatus.end() && itr->second.Status != QUEST_STATUS_NONE)
         {
             if (msg)
-            {
                 SendCanTakeQuestResponse(INVALIDREASON_DONT_HAVE_REQ);
-                TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestNextChain: Sent INVALIDREASON_DONT_HAVE_REQ (questId: %u) because player already did or started next quest in chain.", qInfo->GetQuestId());
-            }
             return false;
         }
 
@@ -15823,10 +15772,7 @@ bool Player::SatisfyQuestDay(Quest const* qInfo, bool msg)
     if (!have_slot)
     {
         if (msg)
-        {
             SendCanTakeQuestResponse(INVALIDREASON_DAILY_QUESTS_REMAINING);
-            TC_LOG_DEBUG(LOG_FILTER_GENERAL, "SatisfyQuestDay: Sent INVALIDREASON_DAILY_QUESTS_REMAINING (questId: %u) because player already did all possible quests today.", qInfo->GetQuestId());
-        }
         return false;
     }
 
@@ -16718,7 +16664,7 @@ void Player::SendQuestTimerFailed(uint32 quest_id)
     }
 }
 
-void Player::SendCanTakeQuestResponse(QuestFailedReason msg) const
+void Player::SendCanTakeQuestResponse(uint32 msg) const
 {
     WorldPacket data(SMSG_QUESTGIVER_QUEST_INVALID, 4);
     data << uint32(msg);
@@ -22784,11 +22730,6 @@ void Player::ApplyEquipCooldown(Item* pItem)
 
         // wrong triggering type (note: ITEM_SPELLTRIGGER_ON_NO_DELAY_USE not have cooldown)
         if (spellData.SpellTrigger != ITEM_SPELLTRIGGER_ON_USE)
-            continue;
-
-        // Don't replace longer cooldowns by equip cooldown if we have any.
-        SpellCooldowns::iterator itr = m_spellCooldowns.find(spellData.SpellId);
-        if (itr != m_spellCooldowns.end() && itr->second.itemid == pItem->GetEntry() && itr->second.end > time(NULL) + 30)
             continue;
 
         AddSpellCooldown(spellData.SpellId, pItem->GetEntry(), time(NULL) + 30);

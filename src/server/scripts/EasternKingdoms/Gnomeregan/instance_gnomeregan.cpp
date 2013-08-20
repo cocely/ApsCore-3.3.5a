@@ -45,7 +45,7 @@ public:
 
         uint64 uiBastmasterEmiShortfuseGUID;
 
-        void Initialize() OVERRIDE
+        void Initialize()
         {
             memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 
@@ -55,7 +55,7 @@ public:
             uiBastmasterEmiShortfuseGUID    = 0;
         }
 
-        void Load(const char* in) OVERRIDE
+        void Load(const char* in)
         {
             if (!in)
             {
@@ -77,7 +77,7 @@ public:
             OUT_LOAD_INST_DATA_COMPLETE;
         }
 
-        void OnCreatureCreate(Creature* creature) OVERRIDE
+        void OnCreatureCreate(Creature* creature)
         {
             switch (creature->GetEntry())
             {
@@ -85,7 +85,7 @@ public:
             }
         }
 
-        void OnGameObjectCreate(GameObject* go) OVERRIDE
+        void OnGameObjectCreate(GameObject* go)
         {
             switch (go->GetEntry())
             {

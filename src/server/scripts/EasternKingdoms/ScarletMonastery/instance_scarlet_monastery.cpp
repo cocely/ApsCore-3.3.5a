@@ -63,7 +63,7 @@ public:
 
         uint32 encounter[MAX_ENCOUNTER];
 
-        void Initialize() OVERRIDE
+        void Initialize()
         {
             memset(&encounter, 0, sizeof(encounter));
 
@@ -78,7 +78,7 @@ public:
             DoorHighInquisitorGUID = 0;
         }
 
-        void OnGameObjectCreate(GameObject* go) OVERRIDE
+        void OnGameObjectCreate(GameObject* go)
         {
             switch (go->GetEntry())
             {
@@ -87,7 +87,7 @@ public:
             }
         }
 
-        void OnCreatureCreate(Creature* creature) OVERRIDE
+        void OnCreatureCreate(Creature* creature)
         {
             switch (creature->GetEntry())
             {

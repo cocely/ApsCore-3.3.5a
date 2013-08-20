@@ -56,7 +56,7 @@ class instance_temple_of_ahnqiraj : public InstanceMapScript
 
             uint32 CthunPhase;
 
-            void Initialize() OVERRIDE
+            void Initialize()
             {
                 IsBossDied[0] = false;
                 IsBossDied[1] = false;
@@ -74,7 +74,7 @@ class instance_temple_of_ahnqiraj : public InstanceMapScript
                 CthunPhase = 0;
             }
 
-            void OnCreatureCreate(Creature* creature) OVERRIDE
+            void OnCreatureCreate(Creature* creature)
             {
                 switch (creature->GetEntry())
                 {
@@ -99,7 +99,7 @@ class instance_temple_of_ahnqiraj : public InstanceMapScript
                 }
             }
 
-            bool IsEncounterInProgress() const OVERRIDE
+            bool IsEncounterInProgress() const
             {
                 //not active in AQ40
                 return false;

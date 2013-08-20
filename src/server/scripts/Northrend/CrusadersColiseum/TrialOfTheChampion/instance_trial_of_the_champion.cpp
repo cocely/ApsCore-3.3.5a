@@ -66,7 +66,7 @@ public:
 
         bool bDone;
 
-        void Initialize() OVERRIDE
+        void Initialize()
         {
             uiMovementDone = 0;
             uiGrandChampionsDeaths = 0;
@@ -90,7 +90,7 @@ public:
             memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
         }
 
-        bool IsEncounterInProgress() const OVERRIDE
+        bool IsEncounterInProgress() const
         {
             for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
             {
@@ -101,7 +101,7 @@ public:
             return false;
         }
 
-        void OnCreatureCreate(Creature* creature) OVERRIDE
+        void OnCreatureCreate(Creature* creature)
         {
             Map::PlayerList const &players = instance->GetPlayers();
             uint32 TeamInInstance = 0;
@@ -152,7 +152,7 @@ public:
             }
         }
 
-        void OnGameObjectCreate(GameObject* go) OVERRIDE
+        void OnGameObjectCreate(GameObject* go)
         {
             switch (go->GetEntry())
             {
@@ -282,7 +282,7 @@ public:
             }
         }
 
-        std::string GetSaveData() OVERRIDE
+        std::string GetSaveData()
         {
             OUT_SAVE_INST_DATA;
 
@@ -301,7 +301,7 @@ public:
             return str_data;
         }
 
-        void Load(const char* in) OVERRIDE
+        void Load(const char* in)
         {
             if (!in)
             {

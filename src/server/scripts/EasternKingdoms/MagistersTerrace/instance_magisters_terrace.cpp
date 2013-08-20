@@ -86,7 +86,7 @@ public:
         uint32 StatuesState;
         uint8 felCristalIndex;
 
-        void Initialize() OVERRIDE
+        void Initialize()
         {
             memset(&Encounter, 0, sizeof(Encounter));
 
@@ -108,7 +108,7 @@ public:
             felCristalIndex = 0;
         }
 
-        bool IsEncounterInProgress() const OVERRIDE
+        bool IsEncounterInProgress() const
         {
             for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
                 if (Encounter[i] == IN_PROGRESS)
@@ -188,7 +188,7 @@ public:
             SaveToDB();
         }
 
-        void OnCreatureCreate(Creature* creature) OVERRIDE
+        void OnCreatureCreate(Creature* creature)
         {
             switch (creature->GetEntry())
             {
@@ -204,7 +204,7 @@ public:
             }
         }
 
-        void OnGameObjectCreate(GameObject* go) OVERRIDE
+        void OnGameObjectCreate(GameObject* go)
         {
             switch (go->GetEntry())
             {
@@ -235,7 +235,7 @@ public:
             }
         }
 
-        std::string GetSaveData() OVERRIDE
+        std::string GetSaveData()
         {
             OUT_SAVE_INST_DATA;
 
@@ -246,7 +246,7 @@ public:
             return saveStream.str();
         }
 
-        void Load(const char* str) OVERRIDE
+        void Load(const char* str)
         {
             if (!str)
             {

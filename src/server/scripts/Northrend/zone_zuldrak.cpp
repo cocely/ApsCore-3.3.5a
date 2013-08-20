@@ -1598,9 +1598,9 @@ public:
                 _events.ScheduleEvent(EVENT_TURN_TO_POT, urand(15000, 26000));
             }
 
-            void SetData(uint32 type, uint32 data) OVERRIDE
+            void SetData(uint32 Type, uint32 Data) OVERRIDE
             {
-                if (type == 1 && data == 1)
+                if (Type == 1 && Data == 1)
                     switch (_getingredienttry)
                    {
                         case 2:
@@ -1747,7 +1747,7 @@ class spell_random_ingredient_aura : public SpellScriptLoader
         {
             PrepareAuraScript(spell_random_ingredient_aura_AuraScript);
 
-            bool Validate(SpellInfo const* /*spellInfo*/) OVERRIDE
+            bool Validate(SpellInfo const* /*spellEntry*/) OVERRIDE
             {
                 if (!sSpellMgr->GetSpellInfo(SPELL_RANDOM_INGREDIENT_EASY) || !sSpellMgr->GetSpellInfo(SPELL_RANDOM_INGREDIENT_MEDIUM) || !sSpellMgr->GetSpellInfo(SPELL_RANDOM_INGREDIENT_HARD))
                     return false;
@@ -1794,7 +1794,7 @@ class spell_random_ingredient : public SpellScriptLoader
         {
             PrepareSpellScript(spell_random_ingredient_SpellScript);
 
-            bool Validate(SpellInfo const* /*spellInfo*/) OVERRIDE
+            bool Validate(SpellInfo const* /*spellEntry*/) OVERRIDE
             {
                 if (!sSpellMgr->GetSpellInfo(SPELL_FETCH_KNOTROOT) || !sSpellMgr->GetSpellInfo(SPELL_FETCH_PICKLED_EAGLE_EGG) || !sSpellMgr->GetSpellInfo(SPELL_FETCH_SPECKLED_GUANO) ||
                     !sSpellMgr->GetSpellInfo(SPELL_FETCH_WITHERED_BATWING) || !sSpellMgr->GetSpellInfo(SPELL_FETCH_SEASONED_SLIDER_CIDER) || !sSpellMgr->GetSpellInfo(SPELL_FETCH_PULVERIZED_GARGOYLE_TEETH) ||
@@ -1858,7 +1858,7 @@ class spell_pot_check : public SpellScriptLoader
         {
             PrepareSpellScript(spell_pot_check_SpellScript);
 
-            bool Validate(SpellInfo const* /*spellInfo*/) OVERRIDE
+            bool Validate(SpellInfo const* /*spellEntry*/) OVERRIDE
             {
                 if (!sSpellMgr->GetSpellInfo(SPELL_FETCH_KNOTROOT) || !sSpellMgr->GetSpellInfo(SPELL_FETCH_PICKLED_EAGLE_EGG) || !sSpellMgr->GetSpellInfo(SPELL_FETCH_SPECKLED_GUANO) ||
                     !sSpellMgr->GetSpellInfo(SPELL_FETCH_WITHERED_BATWING) || !sSpellMgr->GetSpellInfo(SPELL_FETCH_SEASONED_SLIDER_CIDER) || !sSpellMgr->GetSpellInfo(SPELL_FETCH_PULVERIZED_GARGOYLE_TEETH) ||

@@ -131,7 +131,7 @@ class instance_naxxramas : public InstanceMapScript
                 memset(PortalsGUID, 0, sizeof(PortalsGUID));
             }
 
-            void OnCreatureCreate(Creature* creature) OVERRIDE
+            void OnCreatureCreate(Creature* creature)
             {
                 switch (creature->GetEntry())
                 {
@@ -175,12 +175,12 @@ class instance_naxxramas : public InstanceMapScript
                 AddMinion(creature, true);
             }
 
-            void OnCreatureRemove(Creature* creature) OVERRIDE
+            void OnCreatureRemove(Creature* creature)
             {
                 AddMinion(creature, false);
             }
 
-            void OnGameObjectCreate(GameObject* go) OVERRIDE
+            void OnGameObjectCreate(GameObject* go)
             {
                 if (go->GetGOInfo()->displayId == 6785 || go->GetGOInfo()->displayId == 1287)
                 {
@@ -220,7 +220,7 @@ class instance_naxxramas : public InstanceMapScript
                 AddDoor(go, true);
             }
 
-            void OnGameObjectRemove(GameObject* go) OVERRIDE
+            void OnGameObjectRemove(GameObject* go)
             {
                 if (go->GetGOInfo()->displayId == 6785 || go->GetGOInfo()->displayId == 1287)
                 {
@@ -247,7 +247,7 @@ class instance_naxxramas : public InstanceMapScript
                 AddDoor(go, false);
             }
 
-            void OnUnitDeath(Unit* unit) OVERRIDE
+            void OnUnitDeath(Unit* unit)
             {
                 if (unit->GetTypeId() == TYPEID_PLAYER && IsEncounterInProgress())
                 {
@@ -344,7 +344,7 @@ class instance_naxxramas : public InstanceMapScript
                 return 0;
             }
 
-            bool SetBossState(uint32 id, EncounterState state) OVERRIDE
+            bool SetBossState(uint32 id, EncounterState state)
             {
                 if (!InstanceScript::SetBossState(id, state))
                     return false;
@@ -427,7 +427,7 @@ class instance_naxxramas : public InstanceMapScript
                 return false;
             }
 
-            std::string GetSaveData() OVERRIDE
+            std::string GetSaveData()
             {
                 OUT_SAVE_INST_DATA;
 
@@ -438,7 +438,7 @@ class instance_naxxramas : public InstanceMapScript
                 return saveStream.str();
             }
 
-            void Load(const char* strIn) OVERRIDE
+            void Load(const char* strIn)
             {
                 if (!strIn)
                 {

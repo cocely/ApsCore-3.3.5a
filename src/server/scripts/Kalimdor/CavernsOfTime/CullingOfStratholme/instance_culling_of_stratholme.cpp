@@ -70,7 +70,7 @@ class instance_culling_of_stratholme : public InstanceMapScript
                 _crateCount = 0;
             }
 
-            bool IsEncounterInProgress() const OVERRIDE
+            bool IsEncounterInProgress() const
             {
                 for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
                     if (_encounterState[i] == IN_PROGRESS)
@@ -79,7 +79,7 @@ class instance_culling_of_stratholme : public InstanceMapScript
                 return false;
             }
 
-            void FillInitialWorldStates(WorldPacket& data) OVERRIDE
+            void FillInitialWorldStates(WorldPacket& data)
             {
                 data << uint32(WORLDSTATE_SHOW_CRATES) << uint32(1);
                 data << uint32(WORLDSTATE_CRATES_REVEALED) << uint32(_crateCount);
@@ -88,7 +88,7 @@ class instance_culling_of_stratholme : public InstanceMapScript
                 data << uint32(WORLDSTATE_TIME_GUARDIAN_SHOW) << uint32(0);
             }
 
-            void OnCreatureCreate(Creature* creature) OVERRIDE
+            void OnCreatureCreate(Creature* creature)
             {
                 switch (creature->GetEntry())
                 {
@@ -116,7 +116,7 @@ class instance_culling_of_stratholme : public InstanceMapScript
                 }
             }
 
-            void OnGameObjectCreate(GameObject* go) OVERRIDE
+            void OnGameObjectCreate(GameObject* go)
             {
                 switch (go->GetEntry())
                 {
@@ -248,7 +248,7 @@ class instance_culling_of_stratholme : public InstanceMapScript
                 return 0;
             }
 
-            std::string GetSaveData() OVERRIDE
+            std::string GetSaveData()
             {
                 OUT_SAVE_INST_DATA;
 
@@ -260,7 +260,7 @@ class instance_culling_of_stratholme : public InstanceMapScript
                 return saveStream.str();
             }
 
-            void Load(const char* in) OVERRIDE
+            void Load(const char* in)
             {
                 if (!in)
                 {

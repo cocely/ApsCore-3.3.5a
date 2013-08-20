@@ -84,7 +84,7 @@ void BattlegroundIC::SendTransportInit(Player* player)
     WorldPacket packet;
 
     transData.BuildPacket(&packet);
-    player->SendDirectMessage(&packet);
+    player->GetSession()->SendPacket(&packet);
 }
 
 void BattlegroundIC::DoAction(uint32 action, uint64 var)
@@ -290,6 +290,19 @@ void BattlegroundIC::StartingEventOpenDoors()
     }
 }
 
+bool BattlegroundIC::IsAllNodesConrolledByTeam(uint32 team) const
+{
+    uint32 count = 0;
+    ICNodeState controlledState = team == ALLIANCE ? NODE_STATE_CONTROLLED_A : NODE_STATE_CONTROLLED_H;
+    for (int i = 0; i < NODE_TYPE_WORKSHOP; ++i)
+    {
+        if (nodePoint[i].nodeState == controlledState)
+            ++count;
+    }
+
+    return count == NODE_TYPE_WORKSHOP;
+}
+
 void BattlegroundIC::AddPlayer(Player* player)
 {
     Battleground::AddPlayer(player);
@@ -313,32 +326,16 @@ void BattlegroundIC::RemovePlayer(Player* player, uint64 /*guid*/, uint32 /*team
     }
 }
 
-void BattlegroundIC::HandleAreaTrigger(Player* player, uint32 trigger)
+void BattlegroundIC::HandleAreaTrigger(Player* /*Source*/, uint32 /*Trigger*/)
 {
     // this is wrong way to implement these things. On official it done by gameobject spell cast.
     if (GetStatus() != STATUS_IN_PROGRESS)
         return;
-
-    /// @hack: this spell should be cast by npc 22515 (World Trigger) and not by the player
-    if (trigger == 5555 && player->GetTeamId() == TEAM_HORDE)
-    {
-        if (GateStatus[BG_IC_A_FRONT] != BG_IC_GATE_DESTROYED
-            && GateStatus[BG_IC_A_WEST] != BG_IC_GATE_DESTROYED
-            && GateStatus[BG_IC_A_EAST] != BG_IC_GATE_DESTROYED)
-        player->CastSpell(player, SPELL_BACK_DOOR_JOB_ACHIEVEMENT, true);
-    }
-    else if (trigger == 5535 && player->GetTeamId() == TEAM_ALLIANCE)
-    {
-        if (GateStatus[BG_IC_H_FRONT] != BG_IC_GATE_DESTROYED
-            && GateStatus[BG_IC_H_WEST] != BG_IC_GATE_DESTROYED
-            && GateStatus[BG_IC_H_EAST] != BG_IC_GATE_DESTROYED)
-        player->CastSpell(player, SPELL_BACK_DOOR_JOB_ACHIEVEMENT, true);
-    }
 }
 
-void BattlegroundIC::UpdatePlayerScore(Player* player, uint32 type, uint32 value, bool doAddHonor)
+void BattlegroundIC::UpdatePlayerScore(Player* Source, uint32 type, uint32 value, bool doAddHonor)
 {
-    std::map<uint64, BattlegroundScore*>::iterator itr = PlayerScores.find(player->GetGUID());
+    std::map<uint64, BattlegroundScore*>::iterator itr = PlayerScores.find(Source->GetGUID());
 
     if (itr == PlayerScores.end())                         // player not found...
         return;
@@ -352,7 +349,7 @@ void BattlegroundIC::UpdatePlayerScore(Player* player, uint32 type, uint32 value
             ((BattlegroundICScore*)itr->second)->BasesDefended += value;
             break;
         default:
-            Battleground::UpdatePlayerScore(player, type, value, doAddHonor);
+            Battleground::UpdatePlayerScore(Source, type, value, doAddHonor);
             break;
     }
 }
@@ -902,8 +899,8 @@ WorldSafeLocsEntry const* BattlegroundIC::GetClosestGraveYard(Player* player)
     // If so, select the closest node to place ghost on
     if (!nodes.empty())
     {
-        float player_x = player->GetPositionX();
-        float player_y = player->GetPositionY();
+        float plr_x = player->GetPositionX();
+        float plr_y = player->GetPositionY();
 
         float mindist = 999999.0f;
         for (uint8 i = 0; i < nodes.size(); ++i)
@@ -911,7 +908,7 @@ WorldSafeLocsEntry const* BattlegroundIC::GetClosestGraveYard(Player* player)
             WorldSafeLocsEntry const*entry = sWorldSafeLocsStore.LookupEntry(BG_IC_GraveyardIds[nodes[i]]);
             if (!entry)
                 continue;
-            float dist = (entry->x - player_x)*(entry->x - player_x)+(entry->y - player_y)*(entry->y - player_y);
+            float dist = (entry->x - plr_x)*(entry->x - plr_x)+(entry->y - plr_y)*(entry->y - plr_y);
             if (mindist > dist)
             {
                 mindist = dist;
@@ -971,36 +968,4 @@ Transport* BattlegroundIC::CreateTransport(uint32 goEntry, uint32 period)
         t->AddNPCPassenger(0, (goEntry == GO_HORDE_GUNSHIP ? NPC_HORDE_GUNSHIP_CANNON : NPC_ALLIANCE_GUNSHIP_CANNON), (goEntry == GO_HORDE_GUNSHIP ? hordeGunshipPassengers[i].GetPositionX() : allianceGunshipPassengers[i].GetPositionX()), (goEntry == GO_HORDE_GUNSHIP ? hordeGunshipPassengers[i].GetPositionY() : allianceGunshipPassengers[i].GetPositionY()), (goEntry == GO_HORDE_GUNSHIP ? hordeGunshipPassengers[i].GetPositionZ() : allianceGunshipPassengers[i].GetPositionZ()), (goEntry == GO_HORDE_GUNSHIP ? hordeGunshipPassengers[i].GetOrientation() : allianceGunshipPassengers[i].GetOrientation()));
 
     return t;
-}
-
-bool BattlegroundIC::IsAllNodesControlledByTeam(uint32 team) const
-{
-    uint32 count = 0;
-    ICNodeState controlledState = team == ALLIANCE ? NODE_STATE_CONTROLLED_A : NODE_STATE_CONTROLLED_H;
-    for (int i = 0; i < NODE_TYPE_WORKSHOP; ++i)
-    {
-        if (nodePoint[i].nodeState == controlledState)
-            ++count;
-    }
-
-    return count == NODE_TYPE_WORKSHOP;
-}
-
-bool BattlegroundIC::IsSpellAllowed(uint32 spellId, Player const* player) const
-{
-    switch (spellId)
-    {
-        case SPELL_OIL_REFINERY:
-        case SPELL_QUARRY:
-        {
-            uint32 team = player->GetTeamId();
-            uint8 nodeType = spellId = SPELL_OIL_REFINERY ? NODE_TYPE_REFINERY : NODE_TYPE_QUARRY;
-            uint8 nodeState = team == TEAM_ALLIANCE ? NODE_STATE_CONTROLLED_A : NODE_STATE_CONTROLLED_H;
-            return GetNodeState(nodeType) == nodeState;
-        }
-        default:
-           break;
-    }
-
-    return true;
 }

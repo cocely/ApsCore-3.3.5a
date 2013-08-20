@@ -41,7 +41,7 @@ class instance_shattered_halls : public InstanceMapScript
         {
             instance_shattered_halls_InstanceMapScript(Map* map) : InstanceScript(map) { }
 
-            void Initialize() OVERRIDE
+            void Initialize()
             {
                 SetBossNumber(EncounterCount);
                 nethekurseGUID      = 0;
@@ -114,7 +114,7 @@ class instance_shattered_halls : public InstanceMapScript
                 return 0;
             }
 
-            std::string GetSaveData() OVERRIDE
+            std::string GetSaveData()
             {
                 OUT_SAVE_INST_DATA;
 
@@ -125,7 +125,7 @@ class instance_shattered_halls : public InstanceMapScript
                 return saveStream.str();
             }
 
-            void Load(const char* strIn) OVERRIDE
+            void Load(const char* strIn)
             {
                 if (!strIn)
                 {

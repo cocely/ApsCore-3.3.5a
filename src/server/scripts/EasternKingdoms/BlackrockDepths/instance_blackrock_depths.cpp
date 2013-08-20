@@ -115,7 +115,7 @@ public:
         uint32 TombTimer;
         uint32 TombEventCounter;
 
-        void Initialize() OVERRIDE
+        void Initialize()
         {
             memset(&encounter, 0, sizeof(encounter));
 
@@ -156,7 +156,7 @@ public:
                 TombBossGUIDs[i] = 0;
         }
 
-        void OnCreatureCreate(Creature* creature) OVERRIDE
+        void OnCreatureCreate(Creature* creature)
         {
             switch (creature->GetEntry())
             {
@@ -178,7 +178,7 @@ public:
             }
         }
 
-        void OnGameObjectCreate(GameObject* go) OVERRIDE
+        void OnGameObjectCreate(GameObject* go)
         {
             switch (go->GetEntry())
             {
@@ -342,12 +342,12 @@ public:
             return 0;
         }
 
-        std::string GetSaveData() OVERRIDE
+        std::string GetSaveData()
         {
             return str_data;
         }
 
-        void Load(const char* in) OVERRIDE
+        void Load(const char* in)
         {
             if (!in)
             {
@@ -429,7 +429,7 @@ public:
             TombEventStarterGUID = 0;
             SetData(TYPE_TOMB_OF_SEVEN, DONE);
         }
-        void Update(uint32 diff) OVERRIDE
+        void Update(uint32 diff)
         {
             if (TombEventStarterGUID && GhostKillCount < 7)
             {

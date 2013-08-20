@@ -168,7 +168,7 @@ public:
 
         std::string str_data;
 
-        void Initialize() OVERRIDE
+        void Initialize()
         {
             uiMoragg = 0;
             uiErekem = 0;
@@ -218,7 +218,7 @@ public:
             memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
         }
 
-        bool IsEncounterInProgress() const OVERRIDE
+        bool IsEncounterInProgress() const
         {
             for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
                 if (m_auiEncounter[i] == IN_PROGRESS)
@@ -227,7 +227,7 @@ public:
             return false;
         }
 
-        void OnCreatureCreate(Creature* creature) OVERRIDE
+        void OnCreatureCreate(Creature* creature)
         {
             switch (creature->GetEntry())
             {
@@ -272,7 +272,7 @@ public:
             }
         }
 
-        void OnGameObjectCreate(GameObject* go) OVERRIDE
+        void OnGameObjectCreate(GameObject* go)
         {
             switch (go->GetEntry())
             {
@@ -615,7 +615,7 @@ public:
             }
         }
 
-        std::string GetSaveData() OVERRIDE
+        std::string GetSaveData()
         {
             OUT_SAVE_INST_DATA;
 
@@ -632,7 +632,7 @@ public:
             return str_data;
         }
 
-        void Load(const char* in) OVERRIDE
+        void Load(const char* in)
         {
             if (!in)
             {
@@ -681,7 +681,7 @@ public:
             return true;
         }
 
-        void Update(uint32 diff) OVERRIDE
+        void Update(uint32 diff)
         {
             if (!instance->HavePlayers())
                 return;

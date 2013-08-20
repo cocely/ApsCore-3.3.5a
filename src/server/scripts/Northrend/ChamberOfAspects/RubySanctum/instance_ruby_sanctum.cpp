@@ -67,7 +67,7 @@ class instance_ruby_sanctum : public InstanceMapScript
                 }
             }
 
-            void OnCreatureCreate(Creature* creature) OVERRIDE
+            void OnCreatureCreate(Creature* creature)
             {
                 switch (creature->GetEntry())
                 {
@@ -112,7 +112,7 @@ class instance_ruby_sanctum : public InstanceMapScript
                 }
             }
 
-            void OnGameObjectCreate(GameObject* go) OVERRIDE
+            void OnGameObjectCreate(GameObject* go)
             {
                 switch (go->GetEntry())
                 {
@@ -155,7 +155,7 @@ class instance_ruby_sanctum : public InstanceMapScript
                 }
             }
 
-            void OnGameObjectRemove(GameObject* go) OVERRIDE
+            void OnGameObjectRemove(GameObject* go)
             {
                 switch (go->GetEntry())
                 {
@@ -167,7 +167,7 @@ class instance_ruby_sanctum : public InstanceMapScript
                 }
             }
 
-            void OnUnitDeath(Unit* unit) OVERRIDE
+            void OnUnitDeath(Unit* unit)
             {
                 Creature* creature = unit->ToCreature();
                 if (!creature)
@@ -224,7 +224,7 @@ class instance_ruby_sanctum : public InstanceMapScript
                 return 0;
             }
 
-            bool SetBossState(uint32 type, EncounterState state) OVERRIDE
+            bool SetBossState(uint32 type, EncounterState state)
             {
                 if (!InstanceScript::SetBossState(type, state))
                     return false;
@@ -294,7 +294,7 @@ class instance_ruby_sanctum : public InstanceMapScript
                 return BaltharusSharedHealth;
             }
 
-            std::string GetSaveData() OVERRIDE
+            std::string GetSaveData()
             {
                 OUT_SAVE_INST_DATA;
 
@@ -305,14 +305,14 @@ class instance_ruby_sanctum : public InstanceMapScript
                 return saveStream.str();
             }
 
-            void FillInitialWorldStates(WorldPacket& data) OVERRIDE
+            void FillInitialWorldStates(WorldPacket& data)
             {
                 data << uint32(WORLDSTATE_CORPOREALITY_MATERIAL) << uint32(50);
                 data << uint32(WORLDSTATE_CORPOREALITY_TWILIGHT) << uint32(50);
                 data << uint32(WORLDSTATE_CORPOREALITY_TOGGLE) << uint32(0);
             }
 
-            void Load(char const* str) OVERRIDE
+            void Load(char const* str)
             {
                 if (!str)
                 {

@@ -77,7 +77,7 @@ class instance_blood_furnace : public InstanceMapScript
             uint32 m_auiEncounter[MAX_ENCOUNTER];
             std::string str_data;
 
-            void Initialize() OVERRIDE
+            void Initialize()
             {
                 memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 
@@ -114,7 +114,7 @@ class instance_blood_furnace : public InstanceMapScript
                 BroggokLeverGUID = 0;
             }
 
-            void OnCreatureCreate(Creature* creature) OVERRIDE
+            void OnCreatureCreate(Creature* creature)
             {
                 switch (creature->GetEntry())
                 {
@@ -133,13 +133,13 @@ class instance_blood_furnace : public InstanceMapScript
                 }
             }
 
-            void OnUnitDeath(Unit* unit) OVERRIDE
+            void OnUnitDeath(Unit* unit)
             {
                 if (unit && unit->GetTypeId() == TYPEID_UNIT && unit->GetEntry() == 17398)
                     PrisonerDied(unit->GetGUID());
             }
 
-            void OnGameObjectCreate(GameObject* go) OVERRIDE
+            void OnGameObjectCreate(GameObject* go)
             {
                  if (go->GetEntry() == 181766)                //Final exit door
                      Door1GUID = go->GetGUID();
@@ -247,7 +247,7 @@ class instance_blood_furnace : public InstanceMapScript
                 return str_data.c_str();
             }
 
-            void Load(const char* in) OVERRIDE
+            void Load(const char* in)
             {
                 if (!in)
                 {

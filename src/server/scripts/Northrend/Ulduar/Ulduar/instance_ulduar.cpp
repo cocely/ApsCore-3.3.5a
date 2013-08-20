@@ -110,7 +110,7 @@ class instance_ulduar : public InstanceMapScript
 
             std::set<uint64> mRubbleSpawns;
 
-            void Initialize() OVERRIDE
+            void Initialize()
             {
                 SetBossNumber(MAX_ENCOUNTER);
                 LoadDoorData(doorData);
@@ -172,13 +172,13 @@ class instance_ulduar : public InstanceMapScript
                 memset(_summonYSKeeper, false, sizeof(_summonYSKeeper));
             }
 
-            void FillInitialWorldStates(WorldPacket& packet) OVERRIDE
+            void FillInitialWorldStates(WorldPacket& packet)
             {
                 packet << uint32(WORLD_STATE_ALGALON_TIMER_ENABLED) << uint32(_algalonTimer && _algalonTimer <= 60);
                 packet << uint32(WORLD_STATE_ALGALON_DESPAWN_TIMER) << uint32(std::min<uint32>(_algalonTimer, 60));
             }
 
-            void OnPlayerEnter(Player* player) OVERRIDE
+            void OnPlayerEnter(Player* player)
             {
                 if (!TeamInInstance)
                     TeamInInstance = player->GetTeam();
@@ -226,7 +226,7 @@ class instance_ulduar : public InstanceMapScript
                     instance->SummonCreature(NPC_MIMIRON_YS, YSKeepersPos[3]);
             }
 
-            void OnCreatureCreate(Creature* creature) OVERRIDE
+            void OnCreatureCreate(Creature* creature)
             {
                 if (!TeamInInstance)
                 {
@@ -419,7 +419,7 @@ class instance_ulduar : public InstanceMapScript
                 }
             }
 
-            void OnCreatureRemove(Creature* creature) OVERRIDE
+            void OnCreatureRemove(Creature* creature)
             {
                 switch (creature->GetEntry())
                 {
@@ -569,7 +569,7 @@ class instance_ulduar : public InstanceMapScript
                 }
             }
 
-            void OnGameObjectRemove(GameObject* gameObject) OVERRIDE
+            void OnGameObjectRemove(GameObject* gameObject)
             {
                 switch (gameObject->GetEntry())
                 {
@@ -587,7 +587,7 @@ class instance_ulduar : public InstanceMapScript
                 }
             }
 
-            void OnUnitDeath(Unit* unit) OVERRIDE
+            void OnUnitDeath(Unit* unit)
             {
                 Creature* creature = unit->ToCreature();
                 if (!creature)
@@ -614,7 +614,7 @@ class instance_ulduar : public InstanceMapScript
                 }
             }
 
-            void ProcessEvent(WorldObject* /*gameObject*/, uint32 eventId) OVERRIDE
+            void ProcessEvent(WorldObject* /*gameObject*/, uint32 eventId)
             {
                 // Flame Leviathan's Tower Event triggers
                 Creature* FlameLeviathan = instance->GetCreature(LeviathanGUID);
@@ -648,7 +648,7 @@ class instance_ulduar : public InstanceMapScript
                 }
             }
 
-            bool SetBossState(uint32 type, EncounterState state) OVERRIDE
+            bool SetBossState(uint32 type, EncounterState state)
             {
                 if (!InstanceScript::SetBossState(type, state))
                     return false;
@@ -951,7 +951,7 @@ class instance_ulduar : public InstanceMapScript
                 return 0;
             }
 
-            bool CheckAchievementCriteriaMeet(uint32 criteriaId, Player const*, Unit const* /* = NULL */, uint32 /* = 0 */) OVERRIDE
+            bool CheckAchievementCriteriaMeet(uint32 criteriaId, Player const*, Unit const* /* = NULL */, uint32 /* = 0 */)
             {
                 switch (criteriaId)
                 {
@@ -986,7 +986,7 @@ class instance_ulduar : public InstanceMapScript
                 return false;
             }
 
-            std::string GetSaveData() OVERRIDE
+            std::string GetSaveData()
             {
                 OUT_SAVE_INST_DATA;
 
@@ -1000,7 +1000,7 @@ class instance_ulduar : public InstanceMapScript
                 return saveStream.str();
             }
 
-            void Load(char const* strIn) OVERRIDE
+            void Load(char const* strIn)
             {
                 if (!strIn)
                 {
@@ -1066,7 +1066,7 @@ class instance_ulduar : public InstanceMapScript
                 OUT_LOAD_INST_DATA_COMPLETE;
             }
 
-            void Update(uint32 diff) OVERRIDE
+            void Update(uint32 diff)
             {
                 if (_events.Empty())
                     return;

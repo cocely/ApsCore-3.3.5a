@@ -18,7 +18,7 @@
 #ifndef DEF_BLACKROCK_SPIRE_H
 #define DEF_BLACKROCK_SPIRE_H
 
-uint32 const EncounterCount         = 23;
+uint32 const EncounterCount         = 22;
 
 #define BRSScriptName "instance_blackrock_spire"
 
@@ -38,16 +38,15 @@ enum DataTypes
     DATA_GYTH                       = 11,
     DATA_THE_BEAST                  = 12,
     DATA_GENERAL_DRAKKISATH         = 13,
-    DATA_LORD_VALTHALAK             = 14,
     // Extra
-    DATA_DRAGONSPIRE_ROOM           = 15,
-    DATA_HALL_RUNE_1                = 16,
-    DATA_HALL_RUNE_2                = 17,
-    DATA_HALL_RUNE_3                = 18,
-    DATA_HALL_RUNE_4                = 19,
-    DATA_HALL_RUNE_5                = 20,
-    DATA_HALL_RUNE_6                = 21,
-    DATA_HALL_RUNE_7                = 22
+    DATA_DRAGONSPIRE_ROOM           = 14,
+    DATA_HALL_RUNE_1                = 15,
+    DATA_HALL_RUNE_2                = 16,
+    DATA_HALL_RUNE_3                = 17,
+    DATA_HALL_RUNE_4                = 18,
+    DATA_HALL_RUNE_5                = 19,
+    DATA_HALL_RUNE_6                = 20,
+    DATA_HALL_RUNE_7                = 21
 };
 
 enum CreaturesIds
@@ -76,7 +75,6 @@ enum CreaturesIds
 enum AdditionalData
 {
     SPELL_SUMMON_ROOKERY_WHELP      = 15745,
-    EVENT_UROK_DOOMHOWL             = 4845,
     EVENT_PYROGUARD_EMBERSEER       = 4884,
     AREATRIGGER                     = 1,
     AREATRIGGER_DRAGONSPIRE_HALL    = 2046,

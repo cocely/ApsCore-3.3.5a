@@ -84,7 +84,6 @@ enum CreaturesIds
     NPC_STALAGG                 = 15929,
     NPC_SAPPHIRON               = 15989,
     NPC_KEL_THUZAD              = 15990,
-    NPC_CRYPT_GUARD             = 16573,
     NPC_NAXXRAMAS_FOLLOWER      = 16505,
     NPC_FOLLOWER_WORSHIPPER     = 16506,
     NPC_DK_UNDERSTUDY           = 16803

@@ -56,7 +56,7 @@ public:
     {
         instance_mount_hyjal_InstanceMapScript(Map* map) : InstanceScript(map) {}
 
-        void Initialize() OVERRIDE
+        void Initialize()
         {
             memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 
@@ -80,7 +80,7 @@ public:
             ArchiYell          = false;
         }
 
-        bool IsEncounterInProgress() const OVERRIDE
+        bool IsEncounterInProgress() const
         {
             for (uint8 i = 0; i < EncounterCount; ++i)
                 if (m_auiEncounter[i] == IN_PROGRESS)
@@ -89,7 +89,7 @@ public:
             return false;
         }
 
-        void OnGameObjectCreate(GameObject* go) OVERRIDE
+        void OnGameObjectCreate(GameObject* go)
         {
             switch (go->GetEntry())
             {
@@ -113,7 +113,7 @@ public:
             }
         }
 
-        void OnCreatureCreate(Creature* creature) OVERRIDE
+        void OnCreatureCreate(Creature* creature)
         {
             switch (creature->GetEntry())
             {
@@ -282,12 +282,12 @@ public:
             return 0;
         }
 
-        std::string GetSaveData() OVERRIDE
+        std::string GetSaveData()
         {
             return str_data;
         }
 
-        void Load(const char* in) OVERRIDE
+        void Load(const char* in)
         {
             if (!in)
             {

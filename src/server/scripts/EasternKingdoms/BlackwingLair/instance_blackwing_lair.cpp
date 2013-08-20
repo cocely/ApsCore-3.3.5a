@@ -59,7 +59,7 @@ public:
             SetBossNumber(EncounterCount);
         }
 
-        void Initialize() OVERRIDE
+        void Initialize()
         {
             // Razorgore
             EggCount = 0;
@@ -85,7 +85,7 @@ public:
             NefarianGUID = 0;
         }
 
-        void OnCreatureCreate(Creature* creature) OVERRIDE
+        void OnCreatureCreate(Creature* creature)
         {
             switch (creature->GetEntry())
             {
@@ -126,7 +126,7 @@ public:
             }
         }
 
-        void OnGameObjectCreate(GameObject* go) OVERRIDE
+        void OnGameObjectCreate(GameObject* go)
         {
             switch (go->GetEntry())
             {
@@ -159,13 +159,13 @@ public:
             }
         }
 
-        void OnGameObjectRemove(GameObject* go) OVERRIDE
+        void OnGameObjectRemove(GameObject* go)
         {
             if (go->GetEntry() == 177807) // Egg
                 EggList.remove(go->GetGUID());
         }
 
-        bool SetBossState(uint32 type, EncounterState state) OVERRIDE
+        bool SetBossState(uint32 type, EncounterState state)
         {
             if (!InstanceScript::SetBossState(type, state))
                 return false;
@@ -268,14 +268,14 @@ public:
             }
         }
 
-        void OnUnitDeath(Unit* unit) OVERRIDE
+        void OnUnitDeath(Unit* unit)
         {
             //! HACK, needed because of buggy CreatureAI after charm
             if (unit->GetEntry() == NPC_RAZORGORE && GetBossState(BOSS_RAZORGORE) != DONE)
                 SetBossState(BOSS_RAZORGORE, DONE);
         }
 
-        void Update(uint32 diff) OVERRIDE
+        void Update(uint32 diff)
         {
             if (_events.Empty())
                 return;

@@ -48,7 +48,7 @@ class instance_scholomance : public InstanceMapScript
                 BrazierOfTheHeraldGUID  = 0;
             }
 
-            void OnGameObjectCreate(GameObject* go) OVERRIDE
+            void OnGameObjectCreate(GameObject* go)
             {
                 switch (go->GetEntry())
                 {
@@ -84,7 +84,7 @@ class instance_scholomance : public InstanceMapScript
                 }
             }
 
-            bool SetBossState(uint32 type, EncounterState state) OVERRIDE
+            bool SetBossState(uint32 type, EncounterState state)
             {
                 if (!InstanceScript::SetBossState(type, state))
                     return false;
@@ -168,7 +168,7 @@ class instance_scholomance : public InstanceMapScript
                     instance->SummonCreature(NPC_DARKMASTER_GANDLING, GandlingLoc);
             }
 
-            std::string GetSaveData() OVERRIDE
+            std::string GetSaveData()
             {
                 OUT_SAVE_INST_DATA;
 
@@ -179,7 +179,7 @@ class instance_scholomance : public InstanceMapScript
                 return saveStream.str();
             }
 
-            void Load(const char* str) OVERRIDE
+            void Load(const char* str)
             {
                 if (!str)
                 {

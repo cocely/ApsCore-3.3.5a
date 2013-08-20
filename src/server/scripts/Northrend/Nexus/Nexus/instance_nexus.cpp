@@ -53,7 +53,7 @@ public:
 
         std::string strInstData;
 
-        void Initialize() OVERRIDE
+        void Initialize()
         {
             memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 
@@ -64,7 +64,7 @@ public:
             TelestrasContainmentSphere = 0;
         }
 
-        void OnCreatureCreate(Creature* creature) OVERRIDE
+        void OnCreatureCreate(Creature* creature)
         {
             Map::PlayerList const &players = instance->GetPlayers();
             uint32 TeamInInstance = 0;
@@ -126,7 +126,7 @@ public:
             }
         }
 
-        void OnGameObjectCreate(GameObject* go) OVERRIDE
+        void OnGameObjectCreate(GameObject* go)
         {
             switch (go->GetEntry())
             {
@@ -234,7 +234,7 @@ public:
             return 0;
         }
 
-        std::string GetSaveData() OVERRIDE
+        std::string GetSaveData()
         {
             return strInstData;
         }

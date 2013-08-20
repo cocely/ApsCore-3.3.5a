@@ -79,7 +79,7 @@ class instance_molten_core : public InstanceMapScript
                 }
             }
 
-            void OnCreatureCreate(Creature* creature) OVERRIDE
+            void OnCreatureCreate(Creature* creature)
             {
                 switch (creature->GetEntry())
                 {
@@ -94,7 +94,7 @@ class instance_molten_core : public InstanceMapScript
                 }
             }
 
-            void OnGameObjectCreate(GameObject* go) OVERRIDE
+            void OnGameObjectCreate(GameObject* go)
             {
                 switch (go->GetEntry())
                 {
@@ -183,7 +183,7 @@ class instance_molten_core : public InstanceMapScript
                         summon->AI()->DoAction(ACTION_START_RAGNAROS_ALT);
             }
 
-            std::string GetSaveData() OVERRIDE
+            std::string GetSaveData()
             {
                 OUT_SAVE_INST_DATA;
 

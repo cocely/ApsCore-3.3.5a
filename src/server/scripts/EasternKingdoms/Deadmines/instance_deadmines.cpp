@@ -72,7 +72,7 @@ class instance_deadmines : public InstanceMapScript
             uint32 PiratesDelay_Timer;
             uint64 uiSmiteChestGUID;
 
-            void Initialize() OVERRIDE
+            void Initialize()
             {
                 FactoryDoorGUID = 0;
                 IronCladDoorGUID = 0;
@@ -86,7 +86,7 @@ class instance_deadmines : public InstanceMapScript
                 uiSmiteChestGUID = 0;
             }
 
-            virtual void Update(uint32 diff) OVERRIDE
+            virtual void Update(uint32 diff)
             {
                 if (!IronCladDoorGUID || !DefiasCannonGUID || !DoorLeverGUID)
                     return;
@@ -188,7 +188,7 @@ class instance_deadmines : public InstanceMapScript
                     pDoorLever->SetUInt32Value(GAMEOBJECT_FLAGS, 4);
             }
 
-            void OnGameObjectCreate(GameObject* go) OVERRIDE
+            void OnGameObjectCreate(GameObject* go)
             {
                 switch (go->GetEntry())
                 {

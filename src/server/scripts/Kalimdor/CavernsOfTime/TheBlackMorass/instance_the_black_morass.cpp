@@ -92,7 +92,7 @@ public:
         uint64 _medivhGUID;
         uint8  _currentRiftId;
 
-        void Initialize() OVERRIDE
+        void Initialize()
         {
             _medivhGUID         = 0;
             Clear();
@@ -117,7 +117,7 @@ public:
             DoUpdateWorldState(WORLD_STATE_BM_RIFT, 0);
         }
 
-        bool IsEncounterInProgress() const OVERRIDE
+        bool IsEncounterInProgress() const
         {
             if (GetData(TYPE_MEDIVH) == IN_PROGRESS)
                 return true;
@@ -125,7 +125,7 @@ public:
             return false;
         }
 
-        void OnPlayerEnter(Player* player) OVERRIDE
+        void OnPlayerEnter(Player* player)
         {
             if (GetData(TYPE_MEDIVH) == IN_PROGRESS)
                 return;
@@ -133,7 +133,7 @@ public:
             player->SendUpdateWorldState(WORLD_STATE_BM, 0);
         }
 
-        void OnCreatureCreate(Creature* creature) OVERRIDE
+        void OnCreatureCreate(Creature* creature)
         {
             if (creature->GetEntry() == NPC_MEDIVH)
                 _medivhGUID = creature->GetGUID();
@@ -317,7 +317,7 @@ public:
             }
         }
 
-        void Update(uint32 diff) OVERRIDE
+        void Update(uint32 diff)
         {
             if (m_auiEncounter[1] != IN_PROGRESS)
                 return;

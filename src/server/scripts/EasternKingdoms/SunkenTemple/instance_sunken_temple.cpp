@@ -79,7 +79,7 @@ public:
         bool s5;
         bool s6;
 
-        void Initialize() OVERRIDE
+        void Initialize()
         {
             GOAtalaiStatue1 = 0;
             GOAtalaiStatue2 = 0;
@@ -99,7 +99,7 @@ public:
             s6 = false;
         }
 
-        void OnGameObjectCreate(GameObject* go) OVERRIDE
+        void OnGameObjectCreate(GameObject* go)
         {
             switch (go->GetEntry())
             {

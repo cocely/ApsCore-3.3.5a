@@ -43,7 +43,7 @@ public:
     {
         instance_oculus_InstanceMapScript(Map* map) : InstanceScript(map) {}
 
-        void Initialize() OVERRIDE
+        void Initialize()
         {
             SetBossNumber(MAX_ENCOUNTER);
 
@@ -65,7 +65,7 @@ public:
             verdisaGUID = 0;
 }
 
-        void OnUnitDeath(Unit* unit) OVERRIDE
+        void OnUnitDeath(Unit* unit)
         {
             Creature* creature = unit->ToCreature();
             if (!creature)
@@ -81,7 +81,7 @@ public:
                     varos->RemoveAllAuras();
         }
 
-        void OnPlayerEnter(Player* player) OVERRIDE
+        void OnPlayerEnter(Player* player)
         {
             if (GetBossState(DATA_DRAKOS_EVENT) == DONE && GetBossState(DATA_VAROS_EVENT) != DONE)
             {
@@ -108,7 +108,7 @@ public:
                 drake->AI()->DoAction(ACTION_CALL_DRAGON_EVENT);
         }
 
-        void OnCreatureCreate(Creature* creature) OVERRIDE
+        void OnCreatureCreate(Creature* creature)
         {
             switch (creature->GetEntry())
             {
@@ -171,7 +171,7 @@ public:
             }
         }
 
-        void OnGameObjectCreate(GameObject* go) OVERRIDE
+        void OnGameObjectCreate(GameObject* go)
         {
             switch (go->GetEntry())
             {
@@ -191,7 +191,7 @@ public:
             }
         }
 
-        bool SetBossState(uint32 type, EncounterState state) OVERRIDE
+        bool SetBossState(uint32 type, EncounterState state)
         {
             if (!InstanceScript::SetBossState(type, state))
                 return false;
@@ -304,7 +304,7 @@ public:
                     gwhelp->SetPhaseMask(1, true);
         }
 
-        std::string GetSaveData() OVERRIDE
+        std::string GetSaveData()
         {
             OUT_SAVE_INST_DATA;
 
@@ -317,7 +317,7 @@ public:
             return str_data;
         }
 
-        void Load(const char* in) OVERRIDE
+        void Load(const char* in)
         {
             if (!in)
             {

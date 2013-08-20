@@ -79,7 +79,7 @@ public:
         uint8 countFires;
         uint8 deathTimes;
 
-        void Initialize() OVERRIDE
+        void Initialize()
         {
             memset(&encounter, 0, sizeof(encounter));
 
@@ -95,7 +95,7 @@ public:
             deathTimes = 0;
         }
 
-        void OnCreatureCreate(Creature* creature) OVERRIDE
+        void OnCreatureCreate(Creature* creature)
         {
             switch (creature->GetEntry())
             {
@@ -108,7 +108,7 @@ public:
             }
         }
 
-        void OnGameObjectCreate(GameObject* go) OVERRIDE
+        void OnGameObjectCreate(GameObject* go)
         {
             switch (go->GetEntry())
             {

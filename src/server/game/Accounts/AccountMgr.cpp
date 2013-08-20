@@ -549,9 +549,10 @@ bool AccountMgr::HasPermission(uint32 accountId, uint32 permissionId, uint32 rea
         return false;
     }
 
-    RBACData rbac(accountId, "", realmId);
-    rbac.LoadFromDB();
-    bool hasPermission = rbac.HasPermission(permissionId);
+    RBACData* rbac = new RBACData(accountId, "", realmId);
+    rbac->LoadFromDB();
+    bool hasPermission = rbac->HasPermission(permissionId);
+    delete rbac;
 
     TC_LOG_DEBUG(LOG_FILTER_RBAC, "AccountMgr::HasPermission [AccountId: %u, PermissionId: %u, realmId: %d]: %u",
                    accountId, permissionId, realmId, hasPermission);

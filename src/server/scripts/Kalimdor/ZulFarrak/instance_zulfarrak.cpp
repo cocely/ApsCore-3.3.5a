@@ -124,7 +124,7 @@ public:
         uint32 addGroupSize;
         uint32 waypoint;
 
-        void Initialize() OVERRIDE
+        void Initialize()
         {
             GahzRillaEncounter = NOT_STARTED;
             ZumrahGUID = 0;
@@ -141,11 +141,11 @@ public:
             waypoint = 0;
         }
 
-        void OnCreatureCreate(Creature* creature) OVERRIDE
+        void OnCreatureCreate(Creature* creature)
         {
             switch (creature->GetEntry())
             {
-                case ENTRY_ZUM_RAH:
+                case ENTRY_ZUMRAH:
                     ZumrahGUID = creature->GetGUID();
                     break;
                 case ENTRY_BLY:
@@ -177,7 +177,7 @@ public:
             }
         }
 
-        void OnGameObjectCreate(GameObject* go) OVERRIDE
+        void OnGameObjectCreate(GameObject* go)
         {
             switch (go->GetEntry())
             {
@@ -201,7 +201,7 @@ public:
         {
             switch (data)
             {
-                case ENTRY_ZUM_RAH:
+                case ENTRY_ZUMRAH:
                     return ZumrahGUID;
                 case ENTRY_BLY:
                     return BlyGUID;

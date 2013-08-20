@@ -86,7 +86,7 @@ public:
         uint64 AccessPanelHydro;
         uint64 AccessPanelMek;
 
-        void Initialize() OVERRIDE
+        void Initialize()
         {
             memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 
@@ -98,7 +98,7 @@ public:
             AccessPanelMek = 0;
         }
 
-        bool IsEncounterInProgress() const OVERRIDE
+        bool IsEncounterInProgress() const
         {
             for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
                  if (m_auiEncounter[i] == IN_PROGRESS)
@@ -107,7 +107,7 @@ public:
             return false;
         }
 
-        void OnCreatureCreate(Creature* creature) OVERRIDE
+        void OnCreatureCreate(Creature* creature)
         {
               switch (creature->GetEntry())
             {
@@ -117,7 +117,7 @@ public:
             }
         }
 
-        void OnGameObjectCreate(GameObject* go) OVERRIDE
+        void OnGameObjectCreate(GameObject* go)
         {
             switch (go->GetEntry())
             {
@@ -127,7 +127,7 @@ public:
             }
         }
 
-        void SetData(uint32 type, uint32 data) OVERRIDE
+        void SetData(uint32 type, uint32 data)
         {
             switch (type)
             {
@@ -167,7 +167,7 @@ public:
                 SaveToDB();
         }
 
-        uint32 GetData(uint32 type) const OVERRIDE
+        uint32 GetData(uint32 type) const
         {
             switch (type)
             {
@@ -183,7 +183,7 @@ public:
             return 0;
         }
 
-        uint64 GetData64(uint32 data) const OVERRIDE
+        uint64 GetData64(uint32 data) const
         {
             switch (data)
             {
@@ -197,7 +197,7 @@ public:
             return 0;
         }
 
-        std::string GetSaveData() OVERRIDE
+        std::string GetSaveData()
         {
             OUT_SAVE_INST_DATA;
 
@@ -208,7 +208,7 @@ public:
             return stream.str();
         }
 
-        void Load(const char* in) OVERRIDE
+        void Load(const char* in)
         {
             if (!in)
             {

@@ -52,7 +52,7 @@ enum Yells
     SAY_INTRO                                     = 5
 };
 
-enum Misc
+enum
 {
     ACHIEV_TIMED_START_EVENT                      = 20381,
 };

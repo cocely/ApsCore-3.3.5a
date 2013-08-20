@@ -89,7 +89,7 @@ class instance_serpent_shrine : public InstanceMapScript
             {
             }
 
-            void Initialize() OVERRIDE
+            void Initialize()
             {
                 memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 
@@ -122,7 +122,7 @@ class instance_serpent_shrine : public InstanceMapScript
 
             }
 
-            bool IsEncounterInProgress() const OVERRIDE
+            bool IsEncounterInProgress() const
             {
                 for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
                     if (m_auiEncounter[i] == IN_PROGRESS)
@@ -131,7 +131,7 @@ class instance_serpent_shrine : public InstanceMapScript
                 return false;
             }
 
-            void Update(uint32 diff) OVERRIDE
+            void Update(uint32 diff)
             {
                 //Water checks
                 if (WaterCheckTimer <= diff)
@@ -191,7 +191,7 @@ class instance_serpent_shrine : public InstanceMapScript
                     FrenzySpawnTimer -= diff;
             }
 
-            void OnGameObjectCreate(GameObject* go) OVERRIDE
+            void OnGameObjectCreate(GameObject* go)
             {
                 switch (go->GetEntry())
                 {
@@ -216,7 +216,7 @@ class instance_serpent_shrine : public InstanceMapScript
                 }
             }
 
-            void OnCreatureCreate(Creature* creature) OVERRIDE
+            void OnCreatureCreate(Creature* creature)
             {
                 switch (creature->GetEntry())
                 {
@@ -392,7 +392,7 @@ class instance_serpent_shrine : public InstanceMapScript
                 return 0;
             }
 
-            std::string GetSaveData() OVERRIDE
+            std::string GetSaveData()
             {
                 OUT_SAVE_INST_DATA;
                 std::ostringstream stream;
@@ -402,7 +402,7 @@ class instance_serpent_shrine : public InstanceMapScript
                 return stream.str();
             }
 
-            void Load(const char* in) OVERRIDE
+            void Load(const char* in)
             {
                 if (!in)
                 {

@@ -35,7 +35,7 @@ class instance_the_botanica : public InstanceMapScript
                 WarpSplinterGUID            = 0;
             }
 
-            void OnCreatureCreate(Creature* creature) OVERRIDE
+            void OnCreatureCreate(Creature* creature)
             {
                 switch (creature->GetEntry())
                 {
@@ -80,7 +80,7 @@ class instance_the_botanica : public InstanceMapScript
                 return 0;
             }
 
-            bool SetBossState(uint32 type, EncounterState state) OVERRIDE
+            bool SetBossState(uint32 type, EncounterState state)
             {
                 if (!InstanceScript::SetBossState(type, state))
                     return false;
@@ -100,7 +100,7 @@ class instance_the_botanica : public InstanceMapScript
                 return true;
             }
 
-            std::string GetSaveData() OVERRIDE
+            std::string GetSaveData()
             {
                 OUT_SAVE_INST_DATA;
 
@@ -111,7 +111,7 @@ class instance_the_botanica : public InstanceMapScript
                 return saveStream.str();
             }
 
-            void Load(char const* str) OVERRIDE
+            void Load(char const* str)
             {
                 if (!str)
                 {

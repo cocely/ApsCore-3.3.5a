@@ -27,17 +27,14 @@ EndScriptData */
 #include "ScriptedCreature.h"
 #include "sethekk_halls.h"
 
-enum Says
+enum TailonkingIkiss
 {
     SAY_INTRO                   = 0,
     SAY_AGGRO                   = 1,
     SAY_SLAY                    = 2,
     SAY_DEATH                   = 3,
-    EMOTE_ARCANE_EXP            = 4
-};
+    EMOTE_ARCANE_EXP            = 4,
 
-enum Spells
-{
     SPELL_BLINK                 = 38194,
     SPELL_BLINK_TELEPORT        = 38203,
     SPELL_MANA_SHIELD           = 38151,
@@ -56,9 +53,28 @@ class boss_talon_king_ikiss : public CreatureScript
 public:
     boss_talon_king_ikiss() : CreatureScript("boss_talon_king_ikiss") { }
 
-    struct boss_talon_king_ikissAI : public BossAI
+    CreatureAI* GetAI(Creature* creature) const OVERRIDE
     {
-        boss_talon_king_ikissAI(Creature* creature) : BossAI(creature, DATA_TALON_KING_IKISS) { }
+        return new boss_talon_king_ikissAI(creature);
+    }
+
+    struct boss_talon_king_ikissAI : public ScriptedAI
+    {
+        boss_talon_king_ikissAI(Creature* creature) : ScriptedAI(creature)
+        {
+            instance = creature->GetInstanceScript();
+        }
+
+        InstanceScript* instance;
+
+        uint32 ArcaneVolley_Timer;
+        uint32 Sheep_Timer;
+        uint32 Blink_Timer;
+        uint32 Slow_Timer;
+
+        bool ManaShield;
+        bool Blink;
+        bool Intro;
 
         void Reset() OVERRIDE
         {
@@ -104,7 +120,7 @@ public:
             Talk(SAY_DEATH);
 
             if (instance)
-                instance->SetData(DATA_TALON_KING_IKISS, DONE);
+                instance->SetData(DATA_IKISSDOOREVENT, DONE);
         }
 
         void KilledUnit(Unit* /*victim*/) OVERRIDE
@@ -188,22 +204,8 @@ public:
             if (!Blink)
                 DoMeleeAttackIfReady();
         }
-
-        private:
-            uint32 ArcaneVolley_Timer;
-            uint32 Sheep_Timer;
-            uint32 Blink_Timer;
-            uint32 Slow_Timer;
-
-            bool ManaShield;
-            bool Blink;
-            bool Intro;
     };
 
-    CreatureAI* GetAI(Creature* creature) const OVERRIDE
-    {
-        return new boss_talon_king_ikissAI(creature);
-    }
 };
 
 void AddSC_boss_talon_king_ikiss()
